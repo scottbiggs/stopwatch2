@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Biggs\' Stopwatch 2</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
+    <string name="clear">clear</string>
+    <string name="split">split</string>
+    <string name="menu_sound_on">turn sound ON</string>
+    <string name="menu_sound_off">turn sound OFF</string>
+    <string name="menu_vibrate_on">turn vibration ON</string>
+    <string name="menu_vibrate_off">turn vibration OFF</string>
+    <string name="menu_awake_on">keep phone AWAKE</string>
+    <string name="menu_awake_off">let phone sleep</string>
+    <string name="about">about</string>
+    <string name="about_msg">This app was made by Scott Morgan Biggs. I like small programs that do one thing and do it cleanly. Bug reports (which will happen as I cannot test every possible hardware configuration, sigh) can be posted on the website: sleepfuriously.com. Thanks for using my little app!</string>
+    <string name="ok">okay</string>
+</resources>
