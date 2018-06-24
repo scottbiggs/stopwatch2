@@ -14,6 +14,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_SOUND = "sound";
     private static final String PREFS_VIBRATE = "vibrate";
     private static final String PREFS_AWAKE = "awake";
+
+    /** number of chars in the counting string */
+    private static final float NUM_DISPLAY_CHARS = 8f;
 
     //-------------------------
     //  Widgets
@@ -95,6 +100,9 @@ public class MainActivity extends AppCompatActivity
     /** controls sound system */
     SoundManager m_sound_mgr;
 
+    /** Screen dimensions */
+    int mScreenWidth, mScreenHeight, mScreenDensity;
+
 
     //-------------------------
     //  Methods
@@ -113,6 +121,33 @@ public class MainActivity extends AppCompatActivity
 
         m_start_button.setOnClickListener(this);
         m_split_button.setOnClickListener(this);
+
+        // Set the font size of the displays
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        mScreenWidth = displayMetrics.widthPixels;
+        mScreenHeight = displayMetrics.heightPixels;
+        mScreenDensity = displayMetrics.densityDpi;
+        float other_density = displayMetrics.density;
+        float sp = m_display1.getTextSize();
+        Log.d(TAG, "width = " + mScreenWidth + ", height = " + mScreenHeight +
+                ", densityDpi = " + mScreenDensity + ", density = " + other_density +
+                ", sp = " + sp);
+
+        int tv_width = m_display1.getWidth();
+        int tv_height = m_display1.getHeight();
+        Log.d (TAG, "tv_width = " + tv_width + ", tv_height = " + tv_height);
+
+        // Calculating the text size.
+        //
+        // the facts:
+        //  8 monospace characters
+        //  They need to fit within mScreenWidth
+        //  so... mScreenWidth / 8 should be the pixels wide for each character
+        //
+        float textsize = ((float)mScreenWidth) / NUM_DISPLAY_CHARS;
+        m_display1.setTextSize(textsize);
+        m_display2.setTextSize(textsize * 0.65f);  // make split time a little smaller
+
 
         // Two notes:
         //	shouldn't this be in onResume?
@@ -555,6 +590,7 @@ public class MainActivity extends AppCompatActivity
                             + (minutes < 10 ? "0" + minutes : minutes) + ":"
                             + (seconds < 10 ? "0" + seconds : seconds)
             );
+
 
         tv.setText(str);
 

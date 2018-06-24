@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="almost_black">#080808</color>
+    <color name="dark_gray">#282828</color>
+    <color name="very_dark_gray">#202020</color>
     <color name="light_gray">#b0b0b0</color>
 </resources>
