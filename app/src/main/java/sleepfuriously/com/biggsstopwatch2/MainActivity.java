@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_AWAKE = "awake";
 
     /** number of chars in the counting string */
-    private static final float NUM_DISPLAY_CHARS = 8f;
+    private static final float NUM_DISPLAY_CHARS = 9f;
 
     //-------------------------
     //  Widgets
@@ -125,24 +125,24 @@ public class MainActivity extends AppCompatActivity
         // Set the font size of the displays
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         mScreenWidth = displayMetrics.widthPixels;
-        mScreenHeight = displayMetrics.heightPixels;
-        mScreenDensity = displayMetrics.densityDpi;
-        float other_density = displayMetrics.density;
-        float sp = m_display1.getTextSize();
-        Log.d(TAG, "width = " + mScreenWidth + ", height = " + mScreenHeight +
-                ", densityDpi = " + mScreenDensity + ", density = " + other_density +
-                ", sp = " + sp);
-
-        int tv_width = m_display1.getWidth();
-        int tv_height = m_display1.getHeight();
-        Log.d (TAG, "tv_width = " + tv_width + ", tv_height = " + tv_height);
+//        mScreenHeight = displayMetrics.heightPixels;
+//        mScreenDensity = displayMetrics.densityDpi;
+//        float other_density = displayMetrics.density;
+//        float sp = m_display1.getTextSize();
+//        Log.d(TAG, "width = " + mScreenWidth + ", height = " + mScreenHeight +
+//                ", densityDpi = " + mScreenDensity + ", density = " + other_density +
+//                ", sp = " + sp);
+//
+//        int tv_width = m_display1.getWidth();
+//        int tv_height = m_display1.getHeight();
+//        Log.d (TAG, "tv_width = " + tv_width + ", tv_height = " + tv_height);
 
         // Calculating the text size.
         //
         // the facts:
-        //  8 monospace characters
+        //  9 monospace characters
         //  They need to fit within mScreenWidth
-        //  so... mScreenWidth / 8 should be the pixels wide for each character
+        //  so... mScreenWidth / 9 should be the pixels wide for each character
         //
         float textsize = ((float)mScreenWidth) / NUM_DISPLAY_CHARS;
         m_display1.setTextSize(textsize);
@@ -192,6 +192,16 @@ public class MainActivity extends AppCompatActivity
         m_sound = prefs.getBoolean(PREFS_SOUND, false);
         m_vibrate = prefs.getBoolean(PREFS_VIBRATE, false);
         m_stay_awake = prefs.getBoolean(PREFS_AWAKE, false);
+
+//        // for testing
+//        Button add_ten_butt = findViewById(R.id.test_butt);
+//        add_ten_butt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // ten minutes = 10 * seconds per minute * millis per second
+//                m_start_time -= (10L * 60L * 1000L);
+//            }
+//        });
 
 
 //		Log.i (tag, "m_state = " + m_state);
@@ -558,39 +568,34 @@ public class MainActivity extends AppCompatActivity
     //		tv  			    The textview to display this time.
     //
     private void update_display (long milliseconds, TextView tv) {
-        long hours = milliseconds / 3600000;
+        int hours = (int) (milliseconds / 3600000);
         long temp = milliseconds % 3600000;
-        long minutes = temp / 60000;
+        int minutes = (int) (temp / 60000);
         temp = temp % 60000;
-        long seconds = temp / 1000;
+        int seconds = (int) (temp / 1000);
         temp = temp % 1000;
-        long hundredths = temp / 10;
+        int hundredths = (int) (temp / 10);
+        int tenths = hundredths / 10;
 
 //		Log.i (tag, "hours = " + hours + ", minutes = " + minutes +
 //				", seconds = " + seconds + ", hundredths = " + hundredths);
 
         String str;
-        if (hours < 10)
-            str = (
-                    (0 == hours ? "" : hours + ":")
-                            + (minutes < 10 ? "0" + minutes : minutes) + ":"
-                            + (seconds < 10 ? "0" + seconds : seconds) + "."
-                            + (hundredths < 10 ? "0" + hundredths : hundredths)
-            );
-        else if (hours < 100)
-            str = (
-                    (hours + ":")
-                            + (minutes < 10 ? "0" + minutes : minutes) + ":"
-                            + (seconds < 10 ? "0" + seconds : seconds) + "."
-                            + (hundredths / 10)
-            );
-        else		// 100 hours or greater, then no fraction displayed.
-            str = (
-                    (hours + ":")
-                            + (minutes < 10 ? "0" + minutes : minutes) + ":"
-                            + (seconds < 10 ? "0" + seconds : seconds)
-            );
 
+        hours = hours % 100;    // Truncate hours
+
+        if (hours < 1) {
+            // Just minutes, seconds, and hundredths
+            str = String.format("%d:%02d.%02d", minutes, seconds, hundredths);
+        }
+
+        else if (hours < 10) {
+            str = String.format("%d:%02d:%02d.%1d", hours, minutes, seconds, tenths);
+        }
+
+        else {
+            str = String.format("%d:%02d:%02d", hours, minutes, seconds);
+        }
 
         tv.setText(str);
 
