@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity
@@ -597,15 +598,15 @@ public class MainActivity extends AppCompatActivity
 
         if (hours < 1) {
             // Just minutes, seconds, and hundredths
-            str = String.format("%d:%02d.%02d", minutes, seconds, hundredths);
+            str = String.format(Locale.US, "%d:%02d.%02d", minutes, seconds, hundredths);
         }
 
         else if (hours < 10) {
-            str = String.format("%d:%02d:%02d.%1d", hours, minutes, seconds, tenths);
+            str = String.format(Locale.US, "%d:%02d:%02d.%1d", hours, minutes, seconds, tenths);
         }
 
         else {
-            str = String.format("%d:%02d:%02d", hours, minutes, seconds);
+            str = String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds);
         }
 
         tv.setText(str);
@@ -624,7 +625,7 @@ public class MainActivity extends AppCompatActivity
 
         //------------------
         //	Constructor
-        public MyCountDown (long millisInFuture,
+        private MyCountDown (long millisInFuture,
                             long countDownInterval) {
             super (millisInFuture, countDownInterval);
         } // constructor
