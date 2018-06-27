@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
                 getSystemService (Context.NOTIFICATION_SERVICE);
         m_notification = new Notification();
         m_notification.defaults |= Notification.DEFAULT_SOUND;
-//        m_notification.icon = R.drawable.icon;      // todo
+        m_notification.icon = R.drawable.ic_stat_name;
         m_notification.tickerText = "test";
         m_notification.when = System.currentTimeMillis();
 
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity
                 // Build the dialog.
                 AlertDialog.Builder builder =
                         new AlertDialog.Builder (this);
-//                builder.setIcon (R.drawable.icon);        // todo
+                builder.setIcon (R.mipmap.ic_launcher);
                 builder.setTitle(R.string.about);
                 builder.setMessage (R.string.about_msg);
                 builder.setPositiveButton(R.string.ok, null);
