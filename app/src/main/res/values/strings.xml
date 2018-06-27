@@ -10,7 +10,17 @@
     <string name="menu_vibrate_off">turn vibration OFF</string>
     <string name="menu_awake_on">keep phone AWAKE</string>
     <string name="menu_awake_off">let phone sleep</string>
-    <string name="about">about</string>
-    <string name="about_msg">This app was made by Scott Morgan Biggs. I like small programs that do one thing and do it cleanly. Bug reports (which will happen as I cannot test every possible hardware configuration, sigh) can be posted on the website: sleepfuriously.com. Thanks for using my little app!</string>
+    <string name="about">notes</string>
+    <string name="about_msg">This app was made by Scott Morgan Biggs.
+        I like small programs that do one thing and do it cleanly.
+        Bug reports (which will happen as I cannot test every possible hardware configuration, sigh)
+        can be posted on the website: sleepfuriously.com. Thanks for using my little app!
+        \n\n
+        Update: this is the 2nd version as Google took down my first (and perfectly working)
+        version just because it was old. Lots of your favorite apps will follow the same
+        demise as programmers can't be bothered to keep updating their apps just because
+        big corporations don\'t care about the little guy. Feel free to make your displeasure
+        known by commenting in your blog, social media, and to anyone who asks your for money.
+    </string>
     <string name="ok">okay</string>
 </resources>

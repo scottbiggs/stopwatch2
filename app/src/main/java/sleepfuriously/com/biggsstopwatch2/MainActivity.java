@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_VIBRATE = "vibrate";
     private static final String PREFS_AWAKE = "awake";
 
+    // Defaults for UI experience
+    private static final boolean
+        DEFAULT_SOUND_SETTING = true,
+        DEFAULT_VIBRATE_SETTING = true,
+        DEFAULT_AWAKE_SETTING = false;
+
     /** number of chars in the counting string */
     private static final float NUM_DISPLAY_CHARS = 9f;
 
@@ -77,14 +83,14 @@ public class MainActivity extends AppCompatActivity
     /** currently displayed split time (millis) */
     long m_split_time;
 
-    /** true = make beep sound */
-    boolean m_sound = false;
+    /** true = make click sound */
+    boolean m_sound = DEFAULT_SOUND_SETTING;
 
     /** true = vibrate */
-    boolean m_vibrate = false;
+    boolean m_vibrate = DEFAULT_VIBRATE_SETTING;
 
     /** true = keep phone awake */
-    boolean m_stay_awake = false;
+    boolean m_stay_awake = DEFAULT_VIBRATE_SETTING;
 
     /** used to make callbacks every hundredth of a second */
     MyCountDown m_timer;
@@ -184,15 +190,6 @@ public class MainActivity extends AppCompatActivity
         m_sound_mgr.initSounds(getBaseContext());
         m_sound_mgr.addSound (1, R.raw.button_click);	// id = 1.
 
-        // The Preferences File system.  Load up our
-        // settings!
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        m_sound = prefs.getBoolean(PREFS_SOUND, false);
-        m_vibrate = prefs.getBoolean(PREFS_VIBRATE, false);
-        m_stay_awake = prefs.getBoolean(PREFS_AWAKE, false);
-
 //        // for testing
 //        Button add_ten_butt = findViewById(R.id.test_butt);
 //        add_ten_butt.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +203,59 @@ public class MainActivity extends AppCompatActivity
 
 //		Log.i (tag, "m_state = " + m_state);
     } // onCreate (.)
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // The Preferences File system.  Load up our
+        // settings!
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        m_sound = prefs.getBoolean(PREFS_SOUND, DEFAULT_SOUND_SETTING);
+        m_vibrate = prefs.getBoolean(PREFS_VIBRATE, DEFAULT_VIBRATE_SETTING);
+        m_stay_awake = prefs.getBoolean(PREFS_AWAKE, DEFAULT_AWAKE_SETTING);
+
+    }
+
+    //-----------------------------
+    //	Called when this activity is completely obscured.
+    //
+    @Override
+    protected void onStop() {
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences (this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(PREFS_SOUND, m_sound);
+        editor.putBoolean(PREFS_VIBRATE, m_vibrate);
+        editor.putBoolean(PREFS_AWAKE, m_stay_awake);
+
+        // Commit the edits!
+        editor.apply();
+
+        super.onStop();
+    } // onStop()
+
+
+    //-----------------------------
+    //	Called when this activity once again becomes visible
+    //
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Do we need to note that this window should stay awake?
+        if (m_stay_awake) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+        else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
+    } // onResume()
 
 
     //-----------------------------
@@ -495,45 +545,6 @@ public class MainActivity extends AppCompatActivity
         } // switch
 
     } // set_widgets()
-
-
-    //-----------------------------
-    //	Called when this activity is completely obscured.
-    //
-    @Override
-    protected void onStop() {
-        // We need an Editor object to make preference changes.
-        // All objects are from android.context.Context
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences (this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(PREFS_SOUND, m_sound);
-        editor.putBoolean(PREFS_VIBRATE, m_vibrate);
-        editor.putBoolean(PREFS_AWAKE, m_stay_awake);
-
-        // Commit the edits!
-        editor.apply();
-
-        super.onStop();
-    } // onStop()
-
-
-    //-----------------------------
-    //	Called when this activity once again becomes visible
-    //
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Do we need to note that this window should stay awake?
-        if (m_stay_awake) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-        else {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-
-    } // onResume()
 
 
     //-----------------------------
