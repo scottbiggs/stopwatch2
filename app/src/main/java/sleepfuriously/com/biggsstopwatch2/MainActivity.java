@@ -108,7 +108,9 @@ public class MainActivity extends AppCompatActivity
     SoundManager m_sound_mgr;
 
     /** Screen dimensions */
-    int mScreenWidth, mScreenHeight, mScreenDensity;
+    int mScreenWidth
+//            , mScreenHeight, mScreenDensity
+        ;
 
 
     //-------------------------
@@ -678,7 +680,7 @@ public class MainActivity extends AppCompatActivity
 
         //------------------------
         @SuppressLint("UseSparseArrays")        // Prevents the warning about using HashMap instead of SparseArray
-        public void initSounds(Context context) {
+        private void initSounds(Context context) {
             mContext = context;
             mSoundPool = new SoundPool(1,
                     AudioManager.STREAM_MUSIC,
