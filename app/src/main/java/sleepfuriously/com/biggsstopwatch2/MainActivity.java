@@ -621,8 +621,9 @@ public class MainActivity extends AppCompatActivity
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //	Extending the CountDownTimer class allows me to neatly
-    //	make my own
+    /**	Extending the CountDownTimer class allows me to neatly
+     *	make my own
+     */
     class MyCountDown extends CountDownTimer {
 
         //------------------
@@ -664,17 +665,16 @@ public class MainActivity extends AppCompatActivity
     //
     public class SoundManager {
 
-        // The Android provided object we use to create and
-        // play sounds.
+        /** The Android provided object we use to create and play sounds. */
         private  SoundPool mSoundPool;
 
-        // A Hashmap to store the sounds once they are loaded.
+        /** A Hashmap to store the sounds once they are loaded. */
         private  HashMap mSoundPoolMap;
 
-        // A handle to the service that plays the sounds we want.
+        /** A handle to the service that plays the sounds we want. */
         private  AudioManager  mAudioManager;
 
-        // A handle to the application Context.
+        /** A handle to the application Context. */
         private  Context mContext;
 
 
