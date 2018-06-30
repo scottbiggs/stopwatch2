@@ -573,7 +573,7 @@ public class MainActivity extends AppCompatActivity
         // NOTE:  Vibration may be done through the Button
         // itself.
         if (m_vibrate) {
-            m_vibrator.vibrate (10);	// Vibrate 100 milliseconds
+            m_vibrator.vibrate (40);	// Vibrate 40 milliseconds
         }
     } // onClick (v)
 
