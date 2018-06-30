@@ -30,7 +30,7 @@ import java.util.Locale;
 // todo:    1. fix font expanding!
 // todo:    2. not vibrating
 // todo:    3. ripple buttons
-
+// todo:    4. hide action bar
 
 public class MainActivity extends AppCompatActivity
                     implements View.OnClickListener {
