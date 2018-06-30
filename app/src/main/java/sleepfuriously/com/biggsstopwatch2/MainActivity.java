@@ -1,12 +1,9 @@
 package sleepfuriously.com.biggsstopwatch2;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -24,7 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 // todo:    1. fix font expanding!
@@ -283,12 +279,20 @@ public class MainActivity extends AppCompatActivity
                      getString (R.string.menu_sound_on));
 
         // Second menu item (#2) is turn/off vibration
-        if (m_vibrate)
-            menu.add (Menu.NONE, 2, Menu.NONE,
-                      getString (R.string.menu_vibrate_off));
-        else
-            menu.add (Menu.NONE, 2, Menu.NONE,
-                      getString (R.string.menu_vibrate_on));
+        if (m_vibrator.hasVibrator()) {
+            if (m_vibrate)
+                menu.add (Menu.NONE, 2, Menu.NONE,
+                        getString (R.string.menu_vibrate_off));
+            else
+                menu.add (Menu.NONE, 2, Menu.NONE,
+                        getString (R.string.menu_vibrate_on));
+
+        }
+        else {
+            // No vibrator present.
+            Log.d(TAG, "no vibrator detected");
+            m_vibrate = false;
+        }
 
         if (m_stay_awake)
             menu.add(Menu.NONE, 3, Menu.NONE,
@@ -343,7 +347,7 @@ public class MainActivity extends AppCompatActivity
 
         // Go ahead and shake if they just turned it on.
         if (m_vibrate)
-            m_vibrator.vibrate (10);	// Vibrate 100 milliseconds
+            m_vibrator.vibrate (100);	// Vibrate 100 milliseconds
 
         return super.onOptionsItemSelected(item);
     } // onOptionsItemSelected (item)
