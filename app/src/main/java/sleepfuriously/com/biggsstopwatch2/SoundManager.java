@@ -13,6 +13,8 @@ import java.util.HashMap;
  * Retrived from the Web:
  *      http://www.droidnova.com/creating-sound-effects-in-android-part-1,570.html
  */
+@SuppressLint("UseSparseArrays")        // Prevents the warning about using HashMap instead of SparseArray
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")   // Prevents warning about Lint not detecting usage of a collection
 public class SoundManager {
 
     /** The Android provided object we use to create and play sounds. */
@@ -29,12 +31,14 @@ public class SoundManager {
 
 
     //------------------------
-    @SuppressLint("UseSparseArrays")        // Prevents the warning about using HashMap instead of SparseArray
     public void initSounds(Context context) {
+
         mContext = context;
-        mSoundPool = new SoundPool(1,
-                AudioManager.STREAM_MUSIC,
-                0);
+
+        SoundPool.Builder builder = new SoundPool.Builder();
+        builder.setMaxStreams(1);
+        mSoundPool = builder.build();
+
         mSoundPoolMap = new HashMap<Integer, Integer>();
         mAudioManager = (AudioManager)
                 mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -49,9 +53,12 @@ public class SoundManager {
     //
     //		SoundID		from raw resources file.  See example.
     //
+    @SuppressWarnings("unchecked")      // needed to remove warning about using put(K,V)
     public void addSound (int index, int SoundID) {
+
         mSoundPoolMap.put (index,
                 mSoundPool.load(mContext, SoundID, 1));
+
     } // addSound (index, SoundID)
 
     //------------------------
@@ -68,6 +75,7 @@ public class SoundManager {
     } // playSound
 
     //------------------------
+    @SuppressWarnings("unused")     // Since this method isn't currently used, I have to suppress the warning
     public void playLoopedSound(int index) {
         float streamVolume = mAudioManager
                 .getStreamVolume(AudioManager.STREAM_MUSIC);
