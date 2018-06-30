@@ -290,7 +290,7 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             // No vibrator present.
-            Log.d(TAG, "no vibrator detected");
+//            Log.d(TAG, "no vibrator detected");
             m_vibrate = false;
         }
 
