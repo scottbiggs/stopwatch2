@@ -27,6 +27,10 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Locale;
 
+// todo:    1. fix font expanding!
+// todo:    2. not vibrating
+// todo:    3. ripple buttons
+
 
 public class MainActivity extends AppCompatActivity
                     implements View.OnClickListener {
